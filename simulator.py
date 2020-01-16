@@ -7,7 +7,7 @@ def sign(x):
     return (1 if x >= 0 else -1)
 
 pygame.init()
-screen = pygame.display.set_mode((500, 500))
+screen = pygame.display.set_mode((600, 500))
 FONT = pygame.font.SysFont("SOURCECODE PRO", 10)
 
 OBJECTS = open("OBJECTS.json", "r").read()
@@ -20,7 +20,10 @@ while True:
             exit()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            pass
+            if event.pos[0] > 500:
+                OBJECTS = open("OBJECTS.json", "r").read()
+                OBJECTS = json.loads(OBJECTS)
+
 
     for obj in OBJECTS:
         for sobj in OBJECTS:
@@ -46,6 +49,9 @@ while True:
         obj["COORDS"][1] -= (obj["SPEED"][1]) / 10
 
     screen.fill((0, 0, 30))
+    pygame.draw.rect(screen, (60, 0, 0), (500, 0, 100, 500))
+    screen.blit(FONT.render("Click here",  0, (100, 100, 100)), (500, 5))
+    screen.blit(FONT.render("to refresh",  0, (100, 100, 100)), (500, 20))
 
     for i in range(len(OBJECTS)):
         obj = OBJECTS[i]
